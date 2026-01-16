@@ -11,7 +11,7 @@ void main() async {
     center: true,
 
     // maximumSize: Size(double.infinity, double.infinity),
-    title: 'Infinite Board',
+    title: 'JBoard',
   );
   // windowManager.waitUntilReadyToShow(windowOptions, () async {
   //   await windowManager.show();
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'white board',
+      title: 'JBoard',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
       home: const Board(),
     );
