@@ -1,7 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:white_board/src/home/board/widget/page.dart';
 
 class BoardDrawer extends StatelessWidget {
@@ -75,10 +73,39 @@ class BoardDrawer extends StatelessWidget {
                             onPressed: index == currentPage
                                 ? onDeletePage
                                 : () {
-                                    Get.snackbar(
-                                      "Error",
-                                      "You have to switch page to delete it",
+                                    ScaffoldMessenger.of(
+                                      context,
+                                    ).hideCurrentSnackBar();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: Colors.red,
+                                        behavior: SnackBarBehavior.floating,
+                                        margin: EdgeInsets.only(
+                                          bottom:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.height *
+                                              0.8,
+                                          left: 10,
+                                          right: 10,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                        ),
+                                        content: Align(
+                                          alignment: Alignment.topCenter,
+
+                                          child: Text(
+                                            "You have to switch page to delete that page",
+                                          ),
+                                        ),
+                                      ),
                                     );
+                                    // ScaffoldMessenger.of(
+                                    //   context,
+                                    // ).hideCurrentSnackBar();
                                   },
                             icon: Icon(
                               Icons.delete_outline,
