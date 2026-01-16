@@ -28,7 +28,7 @@ class MousePointers {
 
     // Encode resized versions
     memoryCursorDataRawPNG = Uint8List.fromList(img2.encodePng(resized));
-    memoryCursorDataRawBGRA = Uint8List.fromList(img2.encodeBmp(resized));
+    memoryCursorDataRawBGRA = _convertToBGRA(resized);
 
     cursorName = await CursorManager.instance.registerCursor(
       CursorData()
@@ -60,7 +60,7 @@ class MousePointers {
 
     // Encode resized versions
     memoryCursorDataRawPNG = Uint8List.fromList(img2.encodePng(resized));
-    memoryCursorDataRawBGRA = Uint8List.fromList(img2.encodeBmp(resized));
+    memoryCursorDataRawBGRA = _convertToBGRA(resized);
 
     cursorName = await CursorManager.instance.registerCursor(
       CursorData()
@@ -91,7 +91,7 @@ class MousePointers {
 
     // Encode resized versions
     memoryCursorDataRawPNG = Uint8List.fromList(img2.encodePng(resized));
-    memoryCursorDataRawBGRA = Uint8List.fromList(img2.encodeBmp(resized));
+    memoryCursorDataRawBGRA = _convertToBGRA(resized);
 
     cursorName = await CursorManager.instance.registerCursor(
       CursorData()
@@ -123,7 +123,7 @@ class MousePointers {
 
     // Encode resized versions
     memoryCursorDataRawPNG = Uint8List.fromList(img2.encodePng(resized));
-    memoryCursorDataRawBGRA = Uint8List.fromList(img2.encodeBmp(resized));
+    memoryCursorDataRawBGRA = _convertToBGRA(resized);
 
     cursorName = await CursorManager.instance.registerCursor(
       CursorData()
@@ -141,5 +141,21 @@ class MousePointers {
   Future<img2.Image> getImage(Uint8List bytes) async {
     final img = img2.decodeImage(bytes)!;
     return img;
+  }
+
+  /// Converts an image to raw BGRA pixel data for Windows cursors
+  Uint8List _convertToBGRA(img2.Image image) {
+    final pixels = <int>[];
+    for (var y = 0; y < image.height; y++) {
+      for (var x = 0; x < image.width; x++) {
+        final pixel = image.getPixel(x, y);
+        // Windows expects BGRA format
+        pixels.add(pixel.b.toInt()); // Blue
+        pixels.add(pixel.g.toInt()); // Green
+        pixels.add(pixel.r.toInt()); // Red
+        pixels.add(pixel.a.toInt()); // Alpha
+      }
+    }
+    return Uint8List.fromList(pixels);
   }
 }
